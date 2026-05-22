@@ -33,17 +33,23 @@ export default async function PoemPage({ params }: Props) {
 
   if (!hasVisual) {
     return (
-      <article className="mx-auto max-w-2xl px-6 py-14">
-        {chapterLabel && (
-          <p className="mb-6 text-sm text-[var(--color-accent)]">
-            {chapterLabel}
+      <article className="poem-sheet mx-auto max-w-2xl px-8 py-16">
+        <div className="poem-sheet__inner">
+          {chapterLabel && (
+            <p className="mb-6 text-center text-sm text-[var(--color-accent)]">
+              {chapterLabel}
+            </p>
+          )}
+          <h1 className="mb-2 text-center text-3xl text-[var(--color-ink)]">
+            {poem.title}
+          </h1>
+          <p className="mb-12 text-center text-[var(--color-ink-muted)] italic">
+            {site.author}
           </p>
-        )}
-        <h1 className="mb-2 text-3xl text-[var(--color-ink)]">{poem.title}</h1>
-        <p className="mb-12 text-[var(--color-ink-muted)] italic">
-          {site.author}
-        </p>
-        <PoemBody body={poem.body} />
+          <div className="poem-sheet__body">
+            <PoemBody body={poem.body} />
+          </div>
+        </div>
         <PoemNav prev={prev} next={next} chapterId={poem.chapter} />
       </article>
     );
@@ -66,12 +72,16 @@ export default async function PoemPage({ params }: Props) {
             layout="stack"
           />
         </div>
-        <div className="book-page-mobile">
-          <h1 className="mb-2 text-3xl text-[var(--color-ink)]">{poem.title}</h1>
-          <p className="mb-8 text-[var(--color-ink-muted)] italic">
+        <div className="book-page-mobile poem-sheet__inner px-2 py-2">
+          <h1 className="mb-2 text-center text-3xl text-[var(--color-ink)]">
+            {poem.title}
+          </h1>
+          <p className="mb-8 text-center text-[var(--color-ink-muted)] italic">
             {site.author}
           </p>
-          <PoemBody body={poem.body} />
+          <div className="poem-sheet__body">
+            <PoemBody body={poem.body} />
+          </div>
         </div>
       </div>
 

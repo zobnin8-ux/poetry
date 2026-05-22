@@ -36,13 +36,15 @@ export function BookSpread({
         <div className="book-gutter" aria-hidden />
 
         <div className="book-page book-page--right">
-          {chapterLabel && (
-            <p className="book-colontitle">{chapterLabel}</p>
-          )}
-          <h1 className="book-title">{title}</h1>
-          <p className="book-author">{author}</p>
-          <div className="book-poem">
-            <PoemBody body={body} />
+          <div className="book-page__inner">
+            {chapterLabel && (
+              <p className="book-colontitle">{chapterLabel}</p>
+            )}
+            <h1 className="book-title">{title}</h1>
+            <p className="book-author">{author}</p>
+            <div className="book-poem">
+              <PoemBody body={body} />
+            </div>
           </div>
         </div>
       </div>
