@@ -61,7 +61,7 @@ export default async function PoemPage({ params }: Props) {
   }
 
   return (
-    <article className="poem-article mx-auto max-w-[96rem] px-3 py-6 lg:px-4 lg:py-8">
+    <article className="poem-article poem-article--spread mx-auto max-w-[96rem] w-full px-3 py-4 lg:px-4 lg:py-2">
       {/* Мобильный: два «листа» друг под другом */}
       <div className="lg:hidden">
         {chapterLabel && (
@@ -100,7 +100,7 @@ export default async function PoemPage({ params }: Props) {
         pageNumber={pageNumber}
       />
 
-      <div className="mx-auto max-w-2xl lg:max-w-4xl">
+      <div className="poem-article__nav mx-auto w-full max-w-2xl lg:max-w-4xl">
         <PoemNav prev={prev} next={next} chapterId={poem.chapter} />
       </div>
     </article>

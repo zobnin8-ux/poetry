@@ -44,34 +44,83 @@ body {
   margin-bottom: 1em;
 }
 
-/* ——— Разворот книги: открытые страницы, тонкий переплёт (не «чёрная рамка») ——— */
+/* ——— Разворот: открытая книга (референс), без тёмной рамки и без скролла внутри ——— */
+
+.poem-article--spread {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 4.75rem);
+}
+
+.poem-article--spread .poem-article__nav {
+  margin-top: 0.85rem;
+  flex-shrink: 0;
+}
 
 .book-desk {
-  /* «Стол» — светлый, как фон сайта, без тяжёлой тёмной подложки */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   background: transparent;
-  padding: 0.5rem 0 1.5rem;
-  margin-bottom: 1rem;
+  padding: 0;
+  margin: 0;
 }
 
 .book-spread {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 22px 1fr;
+  grid-template-columns: 1fr 20px 1fr;
   align-items: stretch;
-  width: 100%;
-  max-width: min(94vw, 1560px);
-  height: min(68vh, 640px);
-  max-height: calc(100vh - 11rem);
+  width: min(96vw, 1580px);
+  /* +15% к предыдущему 68vh, но в пределах экрана */
+  height: min(78vh, calc(100vh - 9rem));
+  max-height: calc(100vh - 9rem);
   margin: 0 auto;
-  /* Тонкий корешок/обложка по краям — как на макете */
-  box-shadow:
-    -5px 0 0 0 #6b5f52,
-    -7px 0 0 0 #5a5048,
-    5px 0 0 0 #6b5f52,
-    7px 0 0 0 #5a5048,
-    0 10px 36px rgba(44, 38, 30, 0.14),
-    0 2px 8px rgba(44, 38, 30, 0.08);
   border-radius: 2px;
+  /* Края обложки и тень — как на референсе открытой книги */
+  box-shadow:
+    -2px 0 0 0 #7d7164,
+    -4px 0 0 0 #5e564c,
+    -6px 0 0 0 #4f4840,
+    2px 0 0 0 #7d7164,
+    4px 0 0 0 #5e564c,
+    6px 0 0 0 #4f4840,
+    0 4px 0 rgba(255, 255, 255, 0.35),
+    0 14px 32px rgba(44, 38, 30, 0.12),
+    0 4px 12px rgba(44, 38, 30, 0.06);
+}
+
+/* Листы чуть «загибаются» к корешку */
+.book-spread::before,
+.book-spread::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.book-spread::before {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(44, 38, 32, 0.06) 0%,
+    transparent 100%
+  );
+}
+
+.book-spread::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(44, 38, 32, 0.06) 0%,
+    transparent 100%
+  );
 }
 
 .book-gutter {
@@ -79,15 +128,15 @@ body {
   align-self: stretch;
   background: linear-gradient(
     90deg,
-    rgba(90, 78, 68, 0.25) 0%,
-    rgba(55, 48, 42, 0.45) 42%,
-    rgba(40, 36, 32, 0.5) 50%,
-    rgba(55, 48, 42, 0.45) 58%,
-    rgba(90, 78, 68, 0.25) 100%
+    rgba(120, 108, 96, 0.12) 0%,
+    rgba(70, 62, 54, 0.28) 45%,
+    rgba(50, 45, 40, 0.35) 50%,
+    rgba(70, 62, 54, 0.28) 55%,
+    rgba(120, 108, 96, 0.12) 100%
   );
   box-shadow:
-    inset 2px 0 8px rgba(0, 0, 0, 0.18),
-    inset -2px 0 8px rgba(0, 0, 0, 0.15);
+    inset 1px 0 6px rgba(0, 0, 0, 0.12),
+    inset -1px 0 6px rgba(0, 0, 0, 0.1);
 }
 
 .book-bookmark {
@@ -179,11 +228,12 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  max-width: 19.5rem;
+  max-width: 20rem;
   margin: 0 auto;
   text-align: center;
   padding: 0 0.35rem;
-  overflow-y: auto;
+  overflow: visible;
+  min-height: 0;
 }
 
 .book-page__footer {
@@ -223,12 +273,12 @@ body {
 }
 
 .book-poem .poetry-line {
-  font-size: 0.8rem;
-  line-height: 1.5;
+  font-size: 0.81rem;
+  line-height: 1.46;
 }
 
 .book-poem .poetry-stanza {
-  margin-bottom: 0.75em;
+  margin-bottom: 0.62em;
 }
 
 .book-page-number {
@@ -253,19 +303,14 @@ body {
 
 @media (min-width: 1280px) {
   .book-spread {
-    max-width: min(96vw, 1620px);
-    height: min(70vh, 660px);
+    width: min(96vw, 1620px);
+    height: min(78vh, calc(100vh - 8.5rem));
+    max-height: calc(100vh - 8.5rem);
   }
 
   .book-poem .poetry-line {
     font-size: 0.84rem;
-    line-height: 1.52;
-  }
-}
-
-@media (min-height: 800px) {
-  .book-spread {
-    height: min(72vh, 680px);
+    line-height: 1.48;
   }
 }
 
