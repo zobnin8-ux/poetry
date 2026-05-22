@@ -87,6 +87,12 @@ export function getAdjacentPoems(slug: string): {
   };
 }
 
+/** Сквозной номер страницы (по порядку стихов в книге, с 1). */
+export function getPoemPageNumber(slug: string): number {
+  const index = getAllPoems().findIndex((p) => p.slug === slug);
+  return index === -1 ? 0 : index + 1;
+}
+
 export function getSiteConfig() {
   const raw = fs.readFileSync(
     path.join(process.cwd(), "content", "site.json"),

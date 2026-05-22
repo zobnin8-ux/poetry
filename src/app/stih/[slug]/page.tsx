@@ -8,6 +8,7 @@ import {
   getAllPoems,
   getChapter,
   getPoemBySlug,
+  getPoemPageNumber,
   getSiteConfig,
 } from "@/lib/content";
 
@@ -30,6 +31,7 @@ export default async function PoemPage({ params }: Props) {
   const chapterLabel = chapter
     ? `${chapter.roman}. ${chapter.title}`
     : undefined;
+  const pageNumber = getPoemPageNumber(slug);
 
   if (!hasVisual) {
     return (
@@ -49,6 +51,9 @@ export default async function PoemPage({ params }: Props) {
           <div className="poem-sheet__body">
             <PoemBody body={poem.body} />
           </div>
+          {pageNumber > 0 && (
+            <p className="poem-sheet__page-num">{pageNumber}</p>
+          )}
         </div>
         <PoemNav prev={prev} next={next} chapterId={poem.chapter} />
       </article>
@@ -92,6 +97,7 @@ export default async function PoemPage({ params }: Props) {
         chapterLabel={chapterLabel}
         illustration={poem.illustration}
         image={poem.image}
+        pageNumber={pageNumber}
       />
 
       <div className="mx-auto max-w-2xl lg:max-w-4xl">
