@@ -48,17 +48,23 @@ export function BookSpread({
             {chapterLabel && (
               <p className="book-colontitle">{chapterLabel}</p>
             )}
+            <BookOrnament place="head" variant="title" />
             <h1 className="book-title">{title}</h1>
+            <BookOrnament place="foot" variant="title" />
             <p className="book-author">{author}</p>
             <div className="book-poem">
               <PoemBody body={body} />
             </div>
           </div>
           <footer className="book-page__footer">
-            <BookOrnament place="foot" />
             {pageNumber > 0 && (
-              <p className="book-page-number">{pageNumber}</p>
+              <p className="book-page-number">
+                <span className="book-page-number__line" aria-hidden />
+                <span>{pageNumber}</span>
+                <span className="book-page-number__line" aria-hidden />
+              </p>
             )}
+            <BookOrnament place="foot" />
           </footer>
         </div>
       </div>

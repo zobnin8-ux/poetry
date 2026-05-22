@@ -44,26 +44,34 @@ body {
   margin-bottom: 1em;
 }
 
-/* ——— Разворот книги (десктоп), по макету ——— */
+/* ——— Разворот книги: открытые страницы, тонкий переплёт (не «чёрная рамка») ——— */
 
 .book-desk {
-  background: linear-gradient(145deg, #5c5348 0%, #4a433c 45%, #3d3832 100%);
-  border-radius: 10px;
-  padding: 1.35rem 1.15rem 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow:
-    0 8px 32px rgba(30, 25, 20, 0.25),
-    0 28px 72px rgba(30, 25, 20, 0.18);
+  /* «Стол» — светлый, как фон сайта, без тяжёлой тёмной подложки */
+  background: transparent;
+  padding: 0.5rem 0 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .book-spread {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 28px 1fr;
+  grid-template-columns: 1fr 22px 1fr;
   align-items: stretch;
   width: 100%;
-  max-width: min(1400px, 96vw);
+  max-width: min(94vw, 1560px);
+  height: min(68vh, 640px);
+  max-height: calc(100vh - 11rem);
   margin: 0 auto;
-  min-height: min(88vh, 940px);
+  /* Тонкий корешок/обложка по краям — как на макете */
+  box-shadow:
+    -5px 0 0 0 #6b5f52,
+    -7px 0 0 0 #5a5048,
+    5px 0 0 0 #6b5f52,
+    7px 0 0 0 #5a5048,
+    0 10px 36px rgba(44, 38, 30, 0.14),
+    0 2px 8px rgba(44, 38, 30, 0.08);
+  border-radius: 2px;
 }
 
 .book-gutter {
@@ -71,15 +79,15 @@ body {
   align-self: stretch;
   background: linear-gradient(
     90deg,
-    rgba(45, 38, 32, 0.35) 0%,
-    rgba(18, 15, 12, 0.55) 40%,
-    rgba(12, 10, 8, 0.65) 50%,
-    rgba(18, 15, 12, 0.55) 60%,
-    rgba(45, 38, 32, 0.35) 100%
+    rgba(90, 78, 68, 0.25) 0%,
+    rgba(55, 48, 42, 0.45) 42%,
+    rgba(40, 36, 32, 0.5) 50%,
+    rgba(55, 48, 42, 0.45) 58%,
+    rgba(90, 78, 68, 0.25) 100%
   );
   box-shadow:
-    inset 4px 0 14px rgba(0, 0, 0, 0.35),
-    inset -4px 0 14px rgba(0, 0, 0, 0.3);
+    inset 2px 0 8px rgba(0, 0, 0, 0.18),
+    inset -2px 0 8px rgba(0, 0, 0, 0.15);
 }
 
 .book-bookmark {
@@ -87,40 +95,38 @@ body {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 10px;
-  height: 52px;
-  background: linear-gradient(180deg, #9a8f7e 0%, #7a7064 100%);
+  width: 8px;
+  height: 36px;
+  background: linear-gradient(180deg, #b5a690 0%, #8f8272 100%);
   border-radius: 0 0 2px 2px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 .book-page {
   position: relative;
-  background-color: #f8f4eb;
+  height: 100%;
+  background-color: #faf7f0;
   background-image:
     radial-gradient(
-      ellipse at 20% 10%,
-      rgba(255, 255, 255, 0.5) 0%,
-      transparent 55%
+      ellipse at 25% 8%,
+      rgba(255, 255, 255, 0.65) 0%,
+      transparent 50%
     ),
-    linear-gradient(180deg, #fcfaf5 0%, #f6f0e4 48%, #f0ebe0 100%);
-  min-height: min(88vh, 940px);
-  box-shadow:
-    inset 0 0 0 1px rgba(139, 126, 106, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65);
-  overflow: visible;
+    linear-gradient(180deg, #fcfaf6 0%, #f7f2e8 55%, #f3ede3 100%);
+  box-shadow: inset 0 0 0 1px rgba(160, 145, 125, 0.18);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .book-page--left {
-  border-radius: 5px 0 0 5px;
-  padding: 1.75rem 2rem 1.5rem;
+  border-radius: 3px 0 0 3px;
+  padding: 1.1rem 1.5rem 1rem;
 }
 
 .book-page--right {
-  border-radius: 0 5px 5px 0;
-  padding: 1.75rem 2.25rem 1.25rem;
+  border-radius: 0 3px 3px 0;
+  padding: 1.1rem 1.75rem 0.85rem;
 }
 
 .book-ornament {
@@ -131,17 +137,30 @@ body {
 }
 
 .book-ornament--head {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .book-ornament--foot {
-  margin-top: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.book-ornament--title.book-ornament--head {
+  margin-bottom: 0.35rem;
+}
+
+.book-ornament--title.book-ornament--foot {
+  margin-top: 0.35rem;
+  margin-bottom: 0.5rem;
 }
 
 .book-ornament__svg {
-  width: 4.5rem;
+  width: 3.25rem;
   height: auto;
-  opacity: 0.85;
+  opacity: 0.8;
+}
+
+.book-ornament--title .book-ornament__svg {
+  width: 7.5rem;
 }
 
 .book-page__art {
@@ -151,8 +170,7 @@ body {
   justify-content: center;
   width: 100%;
   min-height: 0;
-  padding: 1.25rem 1rem 1rem;
-  margin: 0 0.25rem;
+  padding: 0.75rem 0.85rem;
 }
 
 .book-page__inner {
@@ -161,39 +179,40 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  max-width: 21rem;
+  max-width: 19.5rem;
   margin: 0 auto;
   text-align: center;
-  padding: 0 0.5rem;
+  padding: 0 0.35rem;
+  overflow-y: auto;
 }
 
 .book-page__footer {
   flex-shrink: 0;
   text-align: center;
-  padding-top: 0.5rem;
+  padding-top: 0.25rem;
 }
 
 .book-colontitle {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-accent);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.65rem;
 }
 
 .book-title {
-  font-size: 1.7rem;
+  font-size: 1.45rem;
   line-height: 1.2;
   font-weight: 400;
   color: var(--color-ink);
-  margin-bottom: 0.45rem;
+  margin: 0;
 }
 
 .book-author {
-  font-size: 0.92rem;
+  font-size: 0.85rem;
   font-style: italic;
   color: var(--color-ink-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.85rem;
 }
 
 .book-poem {
@@ -204,27 +223,54 @@ body {
 }
 
 .book-poem .poetry-line {
-  font-size: 0.88rem;
-  line-height: 1.58;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.book-poem .poetry-stanza {
+  margin-bottom: 0.75em;
 }
 
 .book-page-number {
-  margin-top: 0.35rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin: 0.15rem 0 0.25rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
   color: var(--color-accent);
   font-variant-numeric: oldstyle-nums;
 }
 
+.book-page-number__line {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
 @media (min-width: 1280px) {
   .book-spread {
-    max-width: min(1460px, 97vw);
+    max-width: min(96vw, 1620px);
+    height: min(70vh, 660px);
   }
 
   .book-poem .poetry-line {
-    font-size: 0.92rem;
-    line-height: 1.62;
+    font-size: 0.84rem;
+    line-height: 1.52;
   }
+}
+
+@media (min-height: 800px) {
+  .book-spread {
+    height: min(72vh, 680px);
+  }
+}
+
+.poem-article {
+  min-height: 0;
 }
 
 /* Страница стиха без иллюстрации */
