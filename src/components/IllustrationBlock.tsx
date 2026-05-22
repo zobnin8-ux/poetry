@@ -36,7 +36,7 @@ export function IllustrationBlock({
             height={900}
             className={
               isBook
-                ? "max-h-[min(68vh,640px)] w-auto max-w-full object-contain"
+                ? "h-auto max-h-[min(78vh,800px)] w-auto max-w-full object-contain"
                 : isSpread
                   ? "h-auto max-h-[min(82vh,820px)] w-full object-contain"
                   : "h-auto w-full object-contain"

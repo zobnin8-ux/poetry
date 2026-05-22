@@ -22,34 +22,27 @@ export function BookSpread({
   return (
     <div className="book-desk hidden lg:block">
       <div className="book-spread">
-        {/* Левая страница — фиксирована при прокрутке */}
-        <div className="book-page-wrap book-page-wrap--left">
-          <div className="book-page book-page--left">
-            <div className="book-page__art">
-              <IllustrationBlock
-                status={illustration}
-                image={image}
-                title={title}
-                layout="book"
-              />
-            </div>
+        <div className="book-page book-page--left">
+          <div className="book-page__art">
+            <IllustrationBlock
+              status={illustration}
+              image={image}
+              title={title}
+              layout="book"
+            />
           </div>
         </div>
 
-        {/* Переплёт */}
         <div className="book-gutter" aria-hidden />
 
-        {/* Правая страница — растёт со стихом, скроллится вместе со страницей */}
         <div className="book-page book-page--right">
           {chapterLabel && (
-            <p className="book-colontitle book-colontitle--right">
-              {chapterLabel}
-            </p>
+            <p className="book-colontitle">{chapterLabel}</p>
           )}
           <h1 className="book-title">{title}</h1>
           <p className="book-author">{author}</p>
           <div className="book-poem">
-            <PoemBody body={body} className="text-[1.05rem]" />
+            <PoemBody body={body} />
           </div>
         </div>
       </div>
