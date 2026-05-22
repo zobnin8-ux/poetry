@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { BookSpread } from "@/components/BookSpread";
 import { IllustrationBlock } from "@/components/IllustrationBlock";
 import { PoemBody } from "@/components/PoemBody";
 import { PoemNav } from "@/components/PoemNav";
@@ -26,13 +27,16 @@ export default async function PoemPage({ params }: Props) {
   const { prev, next } = getAdjacentPoems(slug);
   const hasVisual =
     poem.illustration === "ready" || poem.illustration === "pending";
+  const chapterLabel = chapter
+    ? `${chapter.roman}. ${chapter.title}`
+    : undefined;
 
   if (!hasVisual) {
     return (
       <article className="mx-auto max-w-2xl px-6 py-14">
-        {chapter && (
+        {chapterLabel && (
           <p className="mb-6 text-sm text-[var(--color-accent)]">
-            {chapter.roman}. {chapter.title}
+            {chapterLabel}
           </p>
         )}
         <h1 className="mb-2 text-3xl text-[var(--color-ink)]">{poem.title}</h1>
@@ -46,52 +50,43 @@ export default async function PoemPage({ params }: Props) {
   }
 
   return (
-    <article className="mx-auto max-w-6xl px-6 py-14">
-      {chapter && (
-        <p className="mb-8 text-sm text-[var(--color-accent)] lg:mb-10">
-          {chapter.roman}. {chapter.title}
-        </p>
-      )}
-
-      {/* Мобильный: картинка сверху, стих снизу */}
+    <article className="mx-auto max-w-[72rem] px-4 py-10 lg:px-6 lg:py-14">
+      {/* Мобильный: два «листа» друг под другом */}
       <div className="lg:hidden">
-        <h1 className="mb-2 text-3xl text-[var(--color-ink)]">{poem.title}</h1>
-        <p className="mb-8 text-[var(--color-ink-muted)] italic">
-          {site.author}
-        </p>
-        <IllustrationBlock
-          status={poem.illustration}
-          image={poem.image}
-          title={poem.title}
-          layout="stack"
-        />
-        <div className="mt-10">
-          <PoemBody body={poem.body} />
-        </div>
-      </div>
-
-      {/* Десктоп: разворот — иллюстрация слева, стих справа */}
-      <div className="hidden lg:grid lg:grid-cols-[minmax(300px,44%)_minmax(0,1fr)] lg:items-start lg:gap-14 xl:gap-20">
-        <div className="sticky top-20">
+        {chapterLabel && (
+          <p className="mb-6 text-sm text-[var(--color-accent)]">
+            {chapterLabel}
+          </p>
+        )}
+        <div className="book-page-mobile mb-6">
           <IllustrationBlock
             status={poem.illustration}
             image={poem.image}
             title={poem.title}
-            layout="spread"
+            layout="stack"
           />
         </div>
-        <div className="min-w-0 pt-1">
-          <h1 className="mb-3 text-[2rem] leading-tight text-[var(--color-ink)]">
-            {poem.title}
-          </h1>
-          <p className="mb-10 text-lg text-[var(--color-ink-muted)] italic">
+        <div className="book-page-mobile">
+          <h1 className="mb-2 text-3xl text-[var(--color-ink)]">{poem.title}</h1>
+          <p className="mb-8 text-[var(--color-ink-muted)] italic">
             {site.author}
           </p>
-          <PoemBody body={poem.body} className="text-[1.05rem]" />
+          <PoemBody body={poem.body} />
         </div>
       </div>
 
-      <PoemNav prev={prev} next={next} chapterId={poem.chapter} />
+      <BookSpread
+        title={poem.title}
+        author={site.author}
+        body={poem.body}
+        chapterLabel={chapterLabel}
+        illustration={poem.illustration}
+        image={poem.image}
+      />
+
+      <div className="mx-auto max-w-2xl lg:max-w-4xl">
+        <PoemNav prev={prev} next={next} chapterId={poem.chapter} />
+      </div>
     </article>
   );
 }
