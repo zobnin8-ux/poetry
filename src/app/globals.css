@@ -23,5 +23,11 @@ body {
 
 .poetry-line {
   display: block;
-  line-height: 1.85;
+  line-height: 1.9;
+}
+
+@media (min-width: 1024px) {
+  .poetry-line {
+    line-height: 2;
+  }
 }
