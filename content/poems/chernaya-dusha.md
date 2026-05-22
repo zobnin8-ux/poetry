@@ -3,7 +3,7 @@ title: "Черная душа"
 chapter: ten
 order: 1
 illustration: ready
-image: /illustrations/chernaya-dusha.svg
+image: /illustrations/chernaya-dusha.png
 featured: true
 ---
 
