@@ -21,6 +21,14 @@ body {
   min-height: 100vh;
 }
 
+.poetry-stanza {
+  margin-bottom: 1.35em;
+}
+
+.poetry-stanza:last-child {
+  margin-bottom: 0;
+}
+
 .poetry-line {
   display: block;
   line-height: 1.9;
@@ -30,6 +38,10 @@ body {
   .poetry-line {
     line-height: 2;
   }
+}
+
+.book-poem .poetry-stanza {
+  margin-bottom: 1em;
 }
 
 /* ——— Разворот книги (десктоп) ——— */

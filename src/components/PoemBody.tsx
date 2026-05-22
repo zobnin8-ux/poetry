@@ -1,3 +1,25 @@
+function parseStanzas(body: string): string[][] {
+  const stanzas: string[][] = [];
+  let current: string[] = [];
+
+  for (const line of body.split("\n")) {
+    if (line.trim() === "") {
+      if (current.length > 0) {
+        stanzas.push(current);
+        current = [];
+      }
+    } else {
+      current.push(line);
+    }
+  }
+
+  if (current.length > 0) {
+    stanzas.push(current);
+  }
+
+  return stanzas;
+}
+
 export function PoemBody({
   body,
   className = "",
@@ -5,16 +27,21 @@ export function PoemBody({
   body: string;
   className?: string;
 }) {
-  const lines = body.split("\n").filter((line) => line.trim() !== "");
+  const stanzas = parseStanzas(body.trim());
 
   return (
     <div
-      className={`leading-relaxed text-[var(--color-ink)] ${className}`.trim()}
+      className={`text-[var(--color-ink)] ${className}`.trim()}
+      lang="ru"
     >
-      {lines.map((line, i) => (
-        <span key={i} className="poetry-line">
-          {line}
-        </span>
+      {stanzas.map((stanza, stanzaIndex) => (
+        <div key={stanzaIndex} className="poetry-stanza">
+          {stanza.map((line, lineIndex) => (
+            <span key={lineIndex} className="poetry-line">
+              {line}
+            </span>
+          ))}
+        </div>
       ))}
     </div>
   );
