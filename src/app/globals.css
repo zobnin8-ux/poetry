@@ -6,8 +6,10 @@
   --color-ink: #2c2c2c;
   --color-ink-muted: #5c5348;
   --color-accent: #8b7e6a;
+  --color-gold: #9a8458;
   --font-serif: "Literata", "PT Serif", "Georgia", serif;
   --font-sans: "Segoe UI", system-ui, sans-serif;
+  --book-height: min(78vh, calc(100dvh - 10rem));
 }
 
 html {
@@ -41,86 +43,94 @@ body {
 }
 
 .book-poem .poetry-stanza {
-  margin-bottom: 1em;
+  margin-bottom: 0.55em;
 }
 
-/* ——— Разворот: открытая книга (референс), без тёмной рамки и без скролла внутри ——— */
+/* ——— Разворот: приближение к референсу открытой книги ——— */
 
 .poem-article--spread {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: 1fr auto;
   align-items: center;
-  min-height: calc(100vh - 4.75rem);
+  justify-items: center;
+  width: 100%;
+  min-height: calc(100dvh - 4.5rem);
+  max-height: calc(100dvh - 4.5rem);
+  overflow: hidden;
+  padding-top: 0.25rem;
+  padding-bottom: 0.35rem;
+}
+
+.poem-article--spread .book-desk {
+  grid-row: 1;
+  align-self: center;
 }
 
 .poem-article--spread .poem-article__nav {
-  margin-top: 0.85rem;
-  flex-shrink: 0;
+  grid-row: 2;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .book-desk {
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 100%;
-  background: transparent;
-  padding: 0;
-  margin: 0;
+  padding: 0.5rem 0;
+}
+
+/* Тень «книга на столе» */
+.book-outer {
+  position: relative;
+  display: inline-block;
+  filter: drop-shadow(0 22px 36px rgba(44, 38, 30, 0.14))
+    drop-shadow(0 8px 16px rgba(44, 38, 30, 0.08));
+}
+
+/* Срез блока страниц сбоку (как на макете) */
+.book-edge {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 6px;
+  z-index: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    #ebe3d6 0,
+    #ebe3d6 1px,
+    #d8d0c4 1px,
+    #d8d0c4 2px,
+    #cfc7bb 2px,
+    #cfc7bb 3px
+  );
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.06);
+}
+
+.book-edge--left {
+  left: -6px;
+  border-radius: 2px 0 0 2px;
+  border-left: 1px solid #4a423a;
+}
+
+.book-edge--right {
+  right: -6px;
+  border-radius: 0 2px 2px 0;
+  border-right: 1px solid #4a423a;
 }
 
 .book-spread {
   position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 20px 1fr;
+  grid-template-columns: 1fr 24px 1fr;
   align-items: stretch;
-  width: min(96vw, 1580px);
-  /* +15% к предыдущему 68vh, но в пределах экрана */
-  height: min(78vh, calc(100vh - 9rem));
-  max-height: calc(100vh - 9rem);
-  margin: 0 auto;
+  width: min(94vw, 1680px);
+  height: var(--book-height);
+  max-height: var(--book-height);
   border-radius: 2px;
-  /* Края обложки и тень — как на референсе открытой книги */
-  box-shadow:
-    -2px 0 0 0 #7d7164,
-    -4px 0 0 0 #5e564c,
-    -6px 0 0 0 #4f4840,
-    2px 0 0 0 #7d7164,
-    4px 0 0 0 #5e564c,
-    6px 0 0 0 #4f4840,
-    0 4px 0 rgba(255, 255, 255, 0.35),
-    0 14px 32px rgba(44, 38, 30, 0.12),
-    0 4px 12px rgba(44, 38, 30, 0.06);
-}
-
-/* Листы чуть «загибаются» к корешку */
-.book-spread::before,
-.book-spread::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 14px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.book-spread::before {
-  left: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(44, 38, 32, 0.06) 0%,
-    transparent 100%
-  );
-}
-
-.book-spread::after {
-  right: 0;
-  background: linear-gradient(
-    270deg,
-    rgba(44, 38, 32, 0.06) 0%,
-    transparent 100%
-  );
+  /* Тонкий край переплёта по внешнему контуру */
+  outline: 1px solid #5c5348;
+  outline-offset: 0;
 }
 
 .book-gutter {
@@ -128,15 +138,28 @@ body {
   align-self: stretch;
   background: linear-gradient(
     90deg,
-    rgba(120, 108, 96, 0.12) 0%,
-    rgba(70, 62, 54, 0.28) 45%,
-    rgba(50, 45, 40, 0.35) 50%,
-    rgba(70, 62, 54, 0.28) 55%,
-    rgba(120, 108, 96, 0.12) 100%
+    rgba(100, 90, 78, 0.15) 0%,
+    rgba(55, 48, 42, 0.35) 42%,
+    rgba(35, 30, 26, 0.2) 50%,
+    rgba(55, 48, 42, 0.35) 58%,
+    rgba(100, 90, 78, 0.15) 100%
   );
   box-shadow:
-    inset 1px 0 6px rgba(0, 0, 0, 0.12),
-    inset -1px 0 6px rgba(0, 0, 0, 0.1);
+    inset 4px 0 14px rgba(0, 0, 0, 0.14),
+    inset -4px 0 14px rgba(0, 0, 0, 0.14);
+}
+
+/* Тёмная «лента» переплёта в сгибе */
+.book-gutter__binding {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7px;
+  background: linear-gradient(180deg, #4a4038 0%, #2e2822 50%, #4a4038 100%);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .book-bookmark {
@@ -144,72 +167,47 @@ body {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 8px;
-  height: 36px;
-  background: linear-gradient(180deg, #b5a690 0%, #8f8272 100%);
+  width: 9px;
+  height: 40px;
+  background: linear-gradient(180deg, #c4b59a 0%, #8f7f68 100%);
   border-radius: 0 0 2px 2px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+  z-index: 2;
 }
 
 .book-page {
   position: relative;
   height: 100%;
-  background-color: #faf7f0;
+  background-color: #f9f6ef;
   background-image:
     radial-gradient(
-      ellipse at 25% 8%,
-      rgba(255, 255, 255, 0.65) 0%,
-      transparent 50%
+      ellipse at 30% 6%,
+      rgba(255, 255, 255, 0.7) 0%,
+      transparent 45%
     ),
-    linear-gradient(180deg, #fcfaf6 0%, #f7f2e8 55%, #f3ede3 100%);
-  box-shadow: inset 0 0 0 1px rgba(160, 145, 125, 0.18);
+    linear-gradient(180deg, #fcfaf6 0%, #f7f2e8 50%, #f2ece2 100%);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
+/* Лёгкий загиб страниц к корешку */
 .book-page--left {
   border-radius: 3px 0 0 3px;
-  padding: 1.1rem 1.5rem 1rem;
+  padding: 1.35rem 1.65rem 1rem;
+  box-shadow: inset -10px 0 18px rgba(44, 38, 30, 0.05);
 }
 
 .book-page--right {
   border-radius: 0 3px 3px 0;
-  padding: 1.1rem 1.75rem 0.85rem;
+  padding: 1.2rem 1.85rem 0.9rem;
+  box-shadow: inset 10px 0 18px rgba(44, 38, 30, 0.05);
 }
 
-.book-ornament {
-  display: flex;
-  justify-content: center;
+.book-page__header {
   flex-shrink: 0;
-  color: #a89572;
-}
-
-.book-ornament--head {
-  margin-bottom: 0.5rem;
-}
-
-.book-ornament--foot {
-  margin-top: 0.35rem;
-}
-
-.book-ornament--title.book-ornament--head {
+  text-align: center;
   margin-bottom: 0.35rem;
-}
-
-.book-ornament--title.book-ornament--foot {
-  margin-top: 0.35rem;
-  margin-bottom: 0.5rem;
-}
-
-.book-ornament__svg {
-  width: 3.25rem;
-  height: auto;
-  opacity: 0.8;
-}
-
-.book-ornament--title .book-ornament__svg {
-  width: 7.5rem;
 }
 
 .book-page__art {
@@ -217,9 +215,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
   min-height: 0;
-  padding: 0.75rem 0.85rem;
+  padding: 1.1rem 1rem 0.65rem;
 }
 
 .book-page__inner {
@@ -227,90 +224,114 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
-  max-width: 20rem;
-  margin: 0 auto;
-  text-align: center;
-  padding: 0 0.35rem;
-  overflow: visible;
+  align-items: center;
   min-height: 0;
+  width: 100%;
+  max-width: 19rem;
+  text-align: center;
+  overflow: hidden;
 }
 
 .book-page__footer {
   flex-shrink: 0;
   text-align: center;
-  padding-top: 0.25rem;
+  padding-top: 0.15rem;
+}
+
+.book-ornament {
+  display: flex;
+  justify-content: center;
+  color: var(--color-gold);
+}
+
+.book-ornament--head {
+  margin-bottom: 0.4rem;
+}
+
+.book-ornament--foot {
+  margin-top: 0.25rem;
+}
+
+.book-ornament--colontitle {
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+}
+
+.book-ornament--title.book-ornament--head {
+  margin-bottom: 0.5rem;
+}
+
+.book-ornament__svg {
+  width: 2.75rem;
+  height: auto;
+  opacity: 0.9;
+}
+
+.book-ornament--title .book-ornament__svg {
+  width: 5.5rem;
+}
+
+.book-ornament--colontitle .book-ornament__svg {
+  width: 2.25rem;
 }
 
 .book-colontitle {
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 0.65rem;
-}
-
-.book-title {
-  font-size: 1.45rem;
-  line-height: 1.2;
-  font-weight: 400;
-  color: var(--color-ink);
+  color: var(--color-ink-muted);
   margin: 0;
 }
 
-.book-author {
-  font-size: 0.85rem;
-  font-style: italic;
-  color: var(--color-ink-muted);
-  margin-bottom: 0.85rem;
+.book-title {
+  font-size: clamp(1.25rem, 2.2vh, 1.55rem);
+  line-height: 1.15;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 0.65rem;
 }
 
 .book-poem {
   text-align: left;
   width: fit-content;
   max-width: 100%;
-  margin: 0 auto;
 }
 
 .book-poem .poetry-line {
-  font-size: 0.81rem;
-  line-height: 1.46;
-}
-
-.book-poem .poetry-stanza {
-  margin-bottom: 0.62em;
+  font-size: clamp(0.74rem, 1.05vh, 0.82rem);
+  line-height: 1.4;
 }
 
 .book-page-number {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  margin: 0.15rem 0 0.25rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: var(--color-accent);
+  margin: 0.2rem 0 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--color-gold);
   font-variant-numeric: oldstyle-nums;
 }
 
-.book-page-number__line {
-  display: inline-block;
-  width: 1.75rem;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.55;
+@media (min-width: 1280px) {
+  :root {
+    --book-height: min(80vh, calc(100dvh - 9.5rem));
+  }
+
+  .book-spread {
+    width: min(96vw, 1720px);
+  }
 }
 
-@media (min-width: 1280px) {
-  .book-spread {
-    width: min(96vw, 1620px);
-    height: min(78vh, calc(100vh - 8.5rem));
-    max-height: calc(100vh - 8.5rem);
+@media (max-height: 760px) {
+  :root {
+    --book-height: calc(100dvh - 12.5rem);
   }
 
   .book-poem .poetry-line {
-    font-size: 0.84rem;
-    line-height: 1.48;
+    font-size: 0.72rem;
+    line-height: 1.36;
+  }
+
+  .book-poem .poetry-stanza {
+    margin-bottom: 0.45em;
   }
 }
 
@@ -318,7 +339,6 @@ body {
   min-height: 0;
 }
 
-/* Страница стиха без иллюстрации */
 .poem-sheet__inner {
   text-align: center;
 }
@@ -338,7 +358,6 @@ body {
   color: var(--color-accent);
 }
 
-/* Мобильный «лист» */
 .book-page-mobile {
   background: linear-gradient(180deg, #fcfaf5 0%, #f5f0e6 100%);
   border-radius: 4px;
@@ -346,4 +365,18 @@ body {
   box-shadow:
     inset 0 0 0 1px rgba(139, 126, 106, 0.18),
     0 8px 24px rgba(44, 38, 30, 0.06);
+}
+
+/* На развороте (десктоп) — весь экран под книгу, без нижнего футера сайта */
+@media (min-width: 1024px) {
+  main:has(.poem-article--spread) + footer {
+    display: none;
+  }
+
+  main:has(.poem-article--spread) {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100dvh - 3.5rem);
+    overflow: hidden;
+  }
 }

@@ -23,7 +23,7 @@ export function IllustrationBlock({
         <div
           className={
             isBook
-              ? "flex h-full w-full items-center justify-center p-2"
+              ? "flex h-full w-full items-center justify-center px-3 py-4"
               : isSpread
                 ? "flex items-center justify-center rounded-sm border border-[var(--color-parchment-deep)] bg-white/60 p-2 shadow-sm"
                 : "relative mx-auto max-w-xl overflow-hidden rounded-sm border border-[var(--color-parchment-deep)] bg-white/50"

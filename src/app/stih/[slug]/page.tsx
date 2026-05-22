@@ -92,7 +92,6 @@ export default async function PoemPage({ params }: Props) {
 
       <BookSpread
         title={poem.title}
-        author={site.author}
         body={poem.body}
         chapterLabel={chapterLabel}
         illustration={poem.illustration}
@@ -100,7 +99,7 @@ export default async function PoemPage({ params }: Props) {
         pageNumber={pageNumber}
       />
 
-      <div className="poem-article__nav mx-auto w-full max-w-2xl lg:max-w-4xl">
+      <div className="poem-article__nav mx-auto w-full max-w-2xl shrink-0 lg:max-w-4xl">
         <PoemNav prev={prev} next={next} chapterId={poem.chapter} />
       </div>
     </article>
