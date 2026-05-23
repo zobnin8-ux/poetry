@@ -61,7 +61,7 @@ export default async function PoemPage({ params }: Props) {
   }
 
   return (
-    <article className="poem-article poem-article--spread mx-auto max-w-[96rem] w-full px-3 py-4 lg:px-4 lg:py-2">
+    <article className="poem-article poem-article--spread mx-auto w-full max-w-full px-3 py-4 lg:px-0 lg:py-2">
       {/* Мобильный: два «листа» друг под другом */}
       <div className="lg:hidden">
         {chapterLabel && (

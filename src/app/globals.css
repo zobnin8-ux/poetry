@@ -9,7 +9,8 @@
   --color-gold: #9a8458;
   --font-serif: "Literata", "PT Serif", "Georgia", serif;
   --font-sans: "Segoe UI", system-ui, sans-serif;
-  --book-height: min(78vh, calc(100dvh - 10rem));
+  --book-height: min(76vh, calc(100dvh - 10rem));
+  --book-width: min(92vw, 1680px);
 }
 
 html {
@@ -52,18 +53,23 @@ body {
   display: grid;
   grid-template-rows: 1fr auto;
   align-items: center;
-  justify-items: center;
+  justify-items: stretch;
   width: 100%;
+  max-width: 100%;
   min-height: calc(100dvh - 4.5rem);
   max-height: calc(100dvh - 4.5rem);
-  overflow-x: visible;
-  overflow-y: hidden;
-  padding: 0.25rem 0.85rem 0.35rem;
+  overflow: hidden;
+  padding: 0.25rem 0 0.35rem;
+  box-sizing: border-box;
+  margin-inline: auto;
 }
 
 .poem-article--spread .book-desk {
   grid-row: 1;
   align-self: center;
+  justify-self: center;
+  width: 100%;
+  max-width: 100%;
 }
 
 .poem-article--spread .poem-article__nav {
@@ -76,14 +82,26 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 0.5rem 0;
+  align-items: center;
+  padding: 0;
 }
 
-/* Тень «книга на столе» + место под внешние края */
+/* Центрирование книги по экрану (без сдвига влево) */
+.book-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
 .book-outer {
   position: relative;
-  display: inline-block;
-  padding: 0 8px 6px;
+  width: var(--book-width);
+  max-width: calc(100vw - 2rem);
+  margin-inline: auto;
+  box-sizing: border-box;
   filter: drop-shadow(0 22px 36px rgba(44, 38, 30, 0.14))
     drop-shadow(0 8px 16px rgba(44, 38, 30, 0.08));
 }
@@ -130,19 +148,12 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
   align-items: stretch;
-  width: min(92vw, 1680px);
+  width: 100%;
   height: var(--book-height);
   max-height: var(--book-height);
   border-radius: 2px;
-  /* Симметричные внешние края тома (слева и справа) */
-  box-shadow:
-    -2px 0 0 0 #8a7f72,
-    -4px 0 0 0 #6b6258,
-    -6px 0 0 0 #5a5248,
-    2px 0 0 0 #8a7f72,
-    4px 0 0 0 #6b6258,
-    6px 0 0 0 #5a5248,
-    0 10px 28px rgba(44, 38, 30, 0.1);
+  /* Только тень вниз — боковые слои вылезали за экран и резали правый край */
+  box-shadow: 0 10px 28px rgba(44, 38, 30, 0.1);
 }
 
 .book-gutter {
@@ -369,11 +380,8 @@ body {
 
 @media (min-width: 1280px) {
   :root {
-    --book-height: min(80vh, calc(100dvh - 9.5rem));
-  }
-
-  .book-spread {
-    width: min(96vw, 1720px);
+    --book-height: min(78vh, calc(100dvh - 9.5rem));
+    --book-width: min(94vw, 1720px);
   }
 }
 
@@ -433,7 +441,20 @@ body {
   main:has(.poem-article--spread) {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
     min-height: calc(100dvh - 3.5rem);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
+
+  .poem-article--spread {
+    width: 100%;
+    max-width: 100vw;
+  }
+}
+
+html:has(.poem-article--spread),
+body:has(.poem-article--spread) {
+  overflow-x: hidden;
 }

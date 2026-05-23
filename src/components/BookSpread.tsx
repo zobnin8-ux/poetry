@@ -22,9 +22,10 @@ export function BookSpread({
 }: Props) {
   return (
     <div className="book-desk hidden lg:block">
-      <div className="book-outer">
-        <div className="book-edge book-edge--left" aria-hidden />
-        <div className="book-spread">
+      <div className="book-stage">
+        <div className="book-outer">
+          <div className="book-edge book-edge--left" aria-hidden />
+          <div className="book-spread">
           <div className="book-page book-page--left">
             <div className="book-page__art">
               <IllustrationBlock
@@ -65,8 +66,9 @@ export function BookSpread({
               )}
             </footer>
           </div>
+          </div>
+          <div className="book-edge book-edge--right" aria-hidden />
         </div>
-        <div className="book-edge book-edge--right" aria-hidden />
       </div>
     </div>
   );
