@@ -43,20 +43,19 @@ export function BookSpread({
           </div>
 
           <div className="book-page book-page--right">
-            <BookOrnament place="head" />
-            <header className="book-page__header">
-              {chapterLabel && (
-                <>
-                  <p className="book-colontitle">{chapterLabel}</p>
-                  <BookOrnament place="foot" variant="colontitle" />
-                </>
-              )}
-            </header>
-            <div className="book-page__inner">
-              <BookOrnament place="head" variant="title" />
-              <h1 className="book-title">{title}</h1>
-              <div className="book-poem">
-                <PoemBody body={body} />
+            {chapterLabel && (
+              <header className="book-page__header">
+                <p className="book-colontitle">{chapterLabel}</p>
+                <BookOrnament place="foot" variant="colontitle" />
+              </header>
+            )}
+            <div className="book-page__content">
+              <div className="book-page__inner">
+                <BookOrnament place="head" variant="title" />
+                <h1 className="book-title">{title}</h1>
+                <div className="book-poem">
+                  <PoemBody body={body} />
+                </div>
               </div>
             </div>
             <footer className="book-page__footer">

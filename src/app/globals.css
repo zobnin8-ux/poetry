@@ -56,9 +56,9 @@ body {
   width: 100%;
   min-height: calc(100dvh - 4.5rem);
   max-height: calc(100dvh - 4.5rem);
-  overflow: hidden;
-  padding-top: 0.25rem;
-  padding-bottom: 0.35rem;
+  overflow-x: visible;
+  overflow-y: hidden;
+  padding: 0.25rem 0.85rem 0.35rem;
 }
 
 .poem-article--spread .book-desk {
@@ -79,21 +79,22 @@ body {
   padding: 0.5rem 0;
 }
 
-/* Тень «книга на столе» */
+/* Тень «книга на столе» + место под внешние края */
 .book-outer {
   position: relative;
   display: inline-block;
+  padding: 0 8px 6px;
   filter: drop-shadow(0 22px 36px rgba(44, 38, 30, 0.14))
     drop-shadow(0 8px 16px rgba(44, 38, 30, 0.08));
 }
 
-/* Срез блока страниц сбоку (как на макете) */
+/* Срез блока страниц — внутри padding, не обрезается */
 .book-edge {
   position: absolute;
   top: 4px;
-  bottom: 4px;
-  width: 6px;
-  z-index: 0;
+  bottom: 10px;
+  width: 7px;
+  z-index: 3;
   background: repeating-linear-gradient(
     to bottom,
     #ebe3d6 0,
@@ -103,34 +104,45 @@ body {
     #cfc7bb 2px,
     #cfc7bb 3px
   );
-  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    inset 0 0 4px rgba(0, 0, 0, 0.06),
+    2px 0 6px rgba(44, 38, 30, 0.1);
 }
 
 .book-edge--left {
-  left: -6px;
+  left: 0;
   border-radius: 2px 0 0 2px;
   border-left: 1px solid #4a423a;
 }
 
 .book-edge--right {
-  right: -6px;
+  right: 0;
   border-radius: 0 2px 2px 0;
   border-right: 1px solid #4a423a;
+  box-shadow:
+    inset 0 0 4px rgba(0, 0, 0, 0.06),
+    -2px 0 6px rgba(44, 38, 30, 0.1);
 }
 
 .book-spread {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 24px 1fr;
+  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
   align-items: stretch;
-  width: min(94vw, 1680px);
+  width: min(92vw, 1680px);
   height: var(--book-height);
   max-height: var(--book-height);
   border-radius: 2px;
-  /* Тонкий край переплёта по внешнему контуру */
-  outline: 1px solid #5c5348;
-  outline-offset: 0;
+  /* Симметричные внешние края тома (слева и справа) */
+  box-shadow:
+    -2px 0 0 0 #8a7f72,
+    -4px 0 0 0 #6b6258,
+    -6px 0 0 0 #5a5248,
+    2px 0 0 0 #8a7f72,
+    4px 0 0 0 #6b6258,
+    6px 0 0 0 #5a5248,
+    0 10px 28px rgba(44, 38, 30, 0.1);
 }
 
 .book-gutter {
@@ -177,6 +189,7 @@ body {
 
 .book-page {
   position: relative;
+  min-width: 0;
   height: 100%;
   background-color: #f9f6ef;
   background-image:
@@ -191,17 +204,51 @@ body {
   flex-direction: column;
 }
 
-/* Лёгкий загиб страниц к корешку */
+/* Внешний край листа — слева на левой странице, справа на правой */
+.book-page--left::before,
+.book-page--right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.book-page--left::before {
+  left: 0;
+  background: linear-gradient(
+    270deg,
+    transparent 0%,
+    rgba(90, 82, 72, 0.15) 50%,
+    rgba(74, 66, 58, 0.4) 100%
+  );
+  box-shadow: -2px 0 8px rgba(44, 38, 30, 0.07);
+}
+
+.book-page--right::after {
+  right: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(90, 82, 72, 0.15) 50%,
+    rgba(74, 66, 58, 0.4) 100%
+  );
+  box-shadow: 2px 0 8px rgba(44, 38, 30, 0.07);
+}
+
+/* Лёгкий загиб к корешку; симметричные горизонтальные поля */
 .book-page--left {
   border-radius: 3px 0 0 3px;
-  padding: 1.35rem 1.65rem 1rem;
-  box-shadow: inset -10px 0 18px rgba(44, 38, 30, 0.05);
+  padding: 1.25rem 1.5rem 1rem 1.45rem;
+  box-shadow: inset -12px 0 20px rgba(44, 38, 30, 0.055);
 }
 
 .book-page--right {
   border-radius: 0 3px 3px 0;
-  padding: 1.2rem 1.85rem 0.9rem;
-  box-shadow: inset 10px 0 18px rgba(44, 38, 30, 0.05);
+  padding: 1.1rem 1.5rem 0.85rem;
+  box-shadow: inset 12px 0 20px rgba(44, 38, 30, 0.055);
 }
 
 .book-page__header {
@@ -219,17 +266,26 @@ body {
   padding: 1.1rem 1rem 0.65rem;
 }
 
-.book-page__inner {
+/* Зона стиха: по центру всего правого листа */
+.book-page__content {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  width: 100%;
+  padding: 0 0.35rem;
+}
+
+.book-page__inner {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 0;
-  width: 100%;
-  max-width: 19rem;
+  width: max-content;
+  max-width: min(21rem, 86%);
+  margin: 0 auto;
   text-align: center;
-  overflow: hidden;
 }
 
 .book-page__footer {
@@ -295,6 +351,7 @@ body {
   text-align: left;
   width: fit-content;
   max-width: 100%;
+  margin-inline: auto;
 }
 
 .book-poem .poetry-line {
