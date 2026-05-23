@@ -52,8 +52,11 @@ export function BookSpread({
             )}
             <div className="book-page__content">
               <div className="book-page__inner">
-                <BookOrnament place="head" variant="title" />
-                <h1 className="book-title">{title}</h1>
+                <div className="book-page__title-block">
+                  <BookOrnament place="head" variant="title" />
+                  <h1 className="book-title">{title}</h1>
+                  <BookOrnament place="foot" variant="title" />
+                </div>
                 <div className="book-poem">
                   <PoemBody body={body} />
                 </div>
