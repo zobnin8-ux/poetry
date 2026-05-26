@@ -26,43 +26,13 @@ export default async function PoemPage({ params }: Props) {
   const chapter = getChapter(poem.chapter);
   const site = getSiteConfig();
   const { prev, next } = getAdjacentPoems(slug);
-  const hasVisual =
-    poem.illustration === "ready" || poem.illustration === "pending";
   const chapterLabel = chapter
     ? `${chapter.roman}. ${chapter.title}`
     : undefined;
   const pageNumber = getPoemPageNumber(slug);
 
-  if (!hasVisual) {
-    return (
-      <article className="poem-sheet mx-auto max-w-2xl px-8 py-16">
-        <div className="poem-sheet__inner">
-          {chapterLabel && (
-            <p className="mb-6 text-center text-sm text-[var(--color-accent)]">
-              {chapterLabel}
-            </p>
-          )}
-          <h1 className="mb-2 text-center text-3xl text-[var(--color-ink)]">
-            {poem.title}
-          </h1>
-          <p className="mb-12 text-center text-[var(--color-ink-muted)] italic">
-            {site.author}
-          </p>
-          <div className="poem-sheet__body">
-            <PoemBody body={poem.body} />
-          </div>
-          {pageNumber > 0 && (
-            <p className="poem-sheet__page-num">{pageNumber}</p>
-          )}
-        </div>
-        <PoemNav prev={prev} next={next} chapterId={poem.chapter} />
-      </article>
-    );
-  }
-
   return (
     <article className="poem-article poem-article--spread mx-auto w-full max-w-full px-3 py-4 lg:px-0 lg:py-2">
-      {/* Мобильный: два «листа» друг под другом */}
       <div className="lg:hidden">
         {chapterLabel && (
           <p className="mb-6 text-sm text-[var(--color-accent)]">
@@ -87,6 +57,11 @@ export default async function PoemPage({ params }: Props) {
           <div className="poem-sheet__body">
             <PoemBody body={poem.body} />
           </div>
+          {pageNumber > 0 && (
+            <p className="poem-sheet__page-num mt-8 text-center">
+              {pageNumber}
+            </p>
+          )}
         </div>
       </div>
 

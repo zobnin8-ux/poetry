@@ -55,7 +55,7 @@ export function IllustrationBlock({
     );
   }
 
-  if (status === "pending") {
+  if (status === "pending" || status === "none") {
     return (
       <aside
         className={
@@ -69,9 +69,9 @@ export function IllustrationBlock({
       >
         <div className="mb-4 h-px w-16 bg-[var(--color-accent)]" aria-hidden />
         <p className="max-w-xs text-base leading-relaxed text-[var(--color-ink-muted)]">
-          Художник работает над иллюстрацией к этому стиху.
+          Художник ещё работает над иллюстрацией к этому стиху.
           <br />
-          Когда она будет готова, она появится здесь.
+          Когда она будет готова, она появится на этом месте.
         </p>
       </aside>
     );

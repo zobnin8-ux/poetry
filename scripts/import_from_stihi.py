@@ -186,7 +186,7 @@ def main() -> None:
             f'title: "{title}"\n'
             f"chapter: {chapter}\n"
             f"order: {order}\n"
-            "illustration: none\n"
+            "illustration: pending\n"
             "featured: false\n"
             "---\n\n"
             f"{body}\n"
