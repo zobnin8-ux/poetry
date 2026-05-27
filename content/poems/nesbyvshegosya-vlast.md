@@ -2,7 +2,8 @@
 title: "Несбывшегося власть"
 chapter: nachalo
 order: 520
-illustration: none
+illustration: ready
+image: "/illustrations/nesbyvshegosya-vlast.png"
 featured: false
 ---
 
