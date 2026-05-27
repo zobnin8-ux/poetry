@@ -277,7 +277,7 @@ body {
   padding: 1.1rem 1rem 0.65rem;
 }
 
-/* Зона стиха: по центру всего правого листа */
+/* Зона стиха: по центру, при переполнении — тихий скролл правого листа */
 .book-page__content {
   flex: 1;
   display: flex;
@@ -286,6 +286,29 @@ body {
   min-height: 0;
   width: 100%;
   padding: 0 0.35rem;
+}
+
+.book-page--right .book-page__content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-accent) 38%, transparent)
+    transparent;
+}
+
+.book-page--right .book-page__content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.book-page--right .book-page__content::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-accent) 32%, transparent);
+  border-radius: 4px;
+}
+
+.book-page--right .book-page__content::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .book-page__inner {
@@ -298,6 +321,11 @@ body {
   margin: 0 auto;
   text-align: center;
   gap: 0.15rem;
+}
+
+.book-page--right .book-page__inner {
+  flex-shrink: 0;
+  margin-block: auto;
 }
 
 .book-page__title-block {
@@ -451,7 +479,7 @@ body {
 
 /* На развороте (десктоп) — весь экран под книгу, без нижнего футера сайта */
 @media (min-width: 1024px) {
-  main:has(.poem-article--spread) + footer {
+  main:has(.poem-article--spread) + .site-footer {
     display: none;
   }
 
