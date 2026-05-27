@@ -3,3 +3,10 @@ node_modules
 out
 .env*.local
 *.log
+__pycache__/
+*.pyc
+scripts/*.html
+scripts/all-titles.txt
+scripts/skipped-titles.txt
+scripts/dup.txt
+docs/stihi-docx-*.txt
