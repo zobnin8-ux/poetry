@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className="antialiased">
         <SiteHeader />
         <main>{children}</main>
-        <footer className="border-t border-[var(--color-parchment-deep)] py-10 text-center text-sm text-[var(--color-ink-muted)]">
+        <footer className="site-footer border-t border-[var(--color-parchment-deep)] py-10 text-center text-sm text-[var(--color-ink-muted)]">
           <p>© Андрей Зобнин</p>
         </footer>
       </body>
