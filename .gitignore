@@ -10,3 +10,5 @@ scripts/all-titles.txt
 scripts/skipped-titles.txt
 scripts/dup.txt
 docs/stihi-docx-*.txt
+scripts/list_titles.py
+scripts/stihi_import_probe.py

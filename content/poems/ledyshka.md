@@ -2,7 +2,8 @@
 title: "Ледышка"
 chapter: svet
 order: 20
-illustration: none
+illustration: ready
+image: "/illustrations/ledyshka.png"
 featured: false
 ---
 
